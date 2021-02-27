@@ -1,0 +1,32 @@
+﻿@model ToDo
+
+<form method="post">
+    <label>ID: @Model.ToDoId</label>
+    @Html.HiddenFor(ToDo => ToDo.ToDoId)
+    <br />
+
+    <label>Description: @Model.Description</label>
+    @Html.HiddenFor(ToDo => ToDo.Description)
+    <br />
+
+    <label>Due Date: @Model.DueDate</label>
+    @Html.HiddenFor(ToDo => ToDo.DueDate)
+    <br />
+    @if (Model.Complete)
+    {
+        <label>Status: Complete</label>
+    }
+    else
+    {
+        <label>Status: Incomplete</label>
+    }
+
+
+    <br />
+    <p>Do you wish to delete this task?</p>
+    <input type="submit" value="Yes" />
+</form>
+
+<a asp-action="Index" asp-controller="TaskManager">
+    <button>No</button>
+</a>

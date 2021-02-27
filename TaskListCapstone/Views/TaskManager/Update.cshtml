@@ -1,0 +1,36 @@
+﻿@model ToDo
+
+
+<form method="post">
+    <label>ID: </label>
+    <input type="number" name="ToDoId" id="ToDoId" value="@Model.ToDoId" readonly />
+    <br />
+    <label>Description: </label>
+    <input type="text" name="Description" value="@Model.Description" />
+    <br />
+
+    <label>Due Date</label>
+    <input class="form-control" type="datetime-local" data-val="true" data-val-required="The Due Date field is required." data-val-min="Enter a future date."
+           id="DateTime" name="DueDate" asp-format="{0:yyyy-MM-ddTHH:mm}" min="@DateTime.Today" value="@Model.DueDate" />
+    <br />
+
+    <label>Status</label>
+    <br />
+    @if (Model.Complete == true)
+    {
+        <label>Complete:</label><input type="radio" name="Complete" id="Complete"value="true" required checked />
+        <label>Incomplete:</label><input type="radio" name="Complete" id="Complete" value="false" required />
+    }
+    else
+    {
+        <label>Complete:</label><input type="radio" name="Complete" id="Complete" value="true" required />
+        <label>Incomplete:</label><input type="radio" name="Complete" id="Complete" value="false" required checked />
+    }
+
+    <br />
+    <br />
+    <input type="submit" value="Save" />
+</form>
+<a asp-action="Index" asp-controller="TaskManager">
+    <button>Go Back</button>
+</a>

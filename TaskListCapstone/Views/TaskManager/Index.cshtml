@@ -1,0 +1,45 @@
+﻿@model List<ToDo>
+<h2>Welcome to TaskManager5000 please select an option below.</h2>
+
+<p>User Name: @TempData.Peek("UserId")</p>
+<br />
+@foreach (ToDo t in Model)
+{
+    <p>Id: @t.ToDoId</p>
+    @if (t.Complete)
+    {
+        <label>Status: Complete</label>
+    }
+    else
+    {
+        <label>Status: Incomplete</label>
+    }
+    <p>Due Date: @t.DueDate</p>
+    <p>Description: @t.Description</p>
+    <a asp-action="Delete" asp-controller="TaskManager" asp-route-Id="@t.ToDoId">
+        <button>
+            Delete
+        </button>
+    </a>
+    <a asp-action="Update" asp-controller="TaskManager" asp-route-Id="@t.ToDoId">
+        <button>
+            Edit
+        </button>
+    </a>
+    <br />
+    <br />
+}
+
+
+@*<h2>Search Cat by Id</h2>
+    <form asp-action="Search" asp-controller="Cats">
+        @foreach (Cat c in Model)
+        {
+            <label>Id: @c.Id</label>
+            <input type="radio" name="CatId" value="@c.Id" />
+            <br />
+        }
+        <input type="submit" />
+    </form>*@
+<br />
+<a asp-action="Create" asp-controller="TaskManager">Add a new Task to current user</a>
