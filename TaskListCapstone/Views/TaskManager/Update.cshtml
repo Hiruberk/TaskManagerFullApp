@@ -10,15 +10,15 @@
     <br />
 
     <label>Due Date</label>
-    <input class="form-control" type="datetime-local" data-val="true" data-val-required="The Due Date field is required." data-val-min="Enter a future date."
-           id="DateTime" name="DueDate" asp-format="{0:yyyy-MM-ddTHH:mm}" min="@DateTime.Today" value="@Model.DueDate" />
+    <input class="form-control" type="datetime-local" data-val-required="The Due Date field is required."
+           id="DueDate" name="DueDate" asp-format="{0:yyyy-MM-dd}"  value="@Model.DueDate" />
     <br />
 
     <label>Status</label>
     <br />
     @if (Model.Complete == true)
     {
-        <label>Complete:</label><input type="radio" name="Complete" id="Complete"value="true" required checked />
+        <label>Complete:</label><input type="radio" name="Complete" id="Complete" value="true" required checked />
         <label>Incomplete:</label><input type="radio" name="Complete" id="Complete" value="false" required />
     }
     else

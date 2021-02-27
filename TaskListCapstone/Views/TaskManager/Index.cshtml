@@ -1,4 +1,4 @@
-﻿@model List<ToDo>
+﻿@model IEnumerable<ToDo>
 <h2>Welcome to TaskManager5000 please select an option below.</h2>
 
 <p>User Name: @TempData.Peek("UserId")</p>
@@ -14,7 +14,7 @@
     {
         <label>Status: Incomplete</label>
     }
-    <p>Due Date: @t.DueDate</p>
+    <p>Due Date: @t.DueDate.Date</p>
     <p>Description: @t.Description</p>
     <a asp-action="Delete" asp-controller="TaskManager" asp-route-Id="@t.ToDoId">
         <button>

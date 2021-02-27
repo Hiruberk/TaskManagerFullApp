@@ -1,16 +1,18 @@
-﻿<h2>Add a new Task to the Database</h2>
+﻿@model ToDo
+<h2>Add a new Task to the Database</h2>
 
 <form method="post">
     <label>Description</label>
-    <input type="text" name="Description" data-val-required="The Description field is required."/>
+    <input type="text" name="Description" required data-val-required="The Description field is required." />
     <br />
     <label>Due Date</label>
-    <input class="form-control" type="datetime-local" data-val="true" data-val-required="The Due Date field is required."
-           id="DateTime" name="DueDate" asp-format="{0:yyyy-MM-ddTHH:mm}" min="@DateTime.Today.ToString("yyyy-MM-dd")"/>
+    <input class="form-control" type="datetime-local" data-val-required="The Due Date field is required."
+           id="DueDate" name="DueDate" asp-format="{0:yyyy-MM-dd}"  />
     <br />
-    <label>Complete:</label><input type="radio" name="Complete" id="Complete" value="true" readonly disabled/>
+    <label>Complete:</label><input type="radio" name="Complete" id="Complete" value="true" readonly disabled />
     <label>Incomplete:</label><input type="radio" name="Complete" id="Complete" value="false" checked disabled readonly />
     <br />
+    @Html.HiddenFor(ToDo => ToDo.User)
 
     <input type="submit" />
 </form>
