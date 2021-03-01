@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ToDo>
+﻿@model List<ToDo>
 <h2>Welcome to TaskManager5000 please select an option below.</h2>
 
 <p>User Name: @TempData.Peek("UserId")</p>
@@ -30,16 +30,5 @@
     <br />
 }
 
-
-@*<h2>Search Cat by Id</h2>
-    <form asp-action="Search" asp-controller="Cats">
-        @foreach (Cat c in Model)
-        {
-            <label>Id: @c.Id</label>
-            <input type="radio" name="CatId" value="@c.Id" />
-            <br />
-        }
-        <input type="submit" />
-    </form>*@
 <br />
 <a asp-action="Create" asp-controller="TaskManager">Add a new Task to current user</a>

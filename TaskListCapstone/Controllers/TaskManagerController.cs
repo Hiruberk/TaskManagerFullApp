@@ -5,34 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskListCapstone.Models;
-
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNet.Identity;
 
 namespace TaskListCapstone.Controllers
 {   [Authorize]
     public class TaskManagerController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+ 
         private readonly TaskManagerContext _TaskManagerDB;
-        private IdentityUser currentUser;
 
-        public TaskManagerController(TaskManagerContext taskManagerContext, UserManager<IdentityUser> userManager)
-        {
+
+        public TaskManagerController(TaskManagerContext taskManagerContext)
+        { 
             _TaskManagerDB = taskManagerContext;
-            _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index(UserManager<IdentityUser> userManager)
+        public IActionResult Index()
         {
-            //var email = this.User.FindFirstValue(ClaimTypes.Email);
-            //TempData["UserId"] = email;
-
-            //var currentUser = await _userManager.GetUserAsync(User);
-            IdentityUser currentUser = userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
-            return View(await _TaskManagerDB.ToDos.Where(x => x.User.Id == currentUser.Id).ToArrayAsync());
-
+            TempData["UserId"] = User.Identity.Name;
+            return View(_TaskManagerDB.ToDos.Where(x => x.UserId == User.Identity.GetUserId()).ToList());
         }
 
         public IActionResult Create()
@@ -43,10 +37,10 @@ namespace TaskListCapstone.Controllers
         [HttpPost]
         public IActionResult Create(ToDo toDo)
         {
+            toDo.UserId = User.Identity.GetUserId();
+
             if (ModelState.IsValid)
             {
-                toDo.UserId = _userManager.GetEmailAsync(currentUser).ToString();
-                var claims = _userManager.GetClaimsAsync(currentUser).ToString();
                 _TaskManagerDB.ToDos.Add(toDo);
                 _TaskManagerDB.SaveChanges();
                 return RedirectToAction("Index");
@@ -86,7 +80,6 @@ namespace TaskListCapstone.Controllers
         [HttpPost]
         public IActionResult Update(ToDo toDo)
         {
-            toDo.UserId = _userManager.GetUserId(User);
             if (ModelState.IsValid)
             {
                 _TaskManagerDB.ToDos.Update(toDo);
@@ -95,11 +88,5 @@ namespace TaskListCapstone.Controllers
 
             return RedirectToAction("Index");
         }
-
-        //public IActionResult Search(int CatId)
-        //{
-        //    Cat c = _catsDB.Cats.Find(CatId);
-        //    return View(c);
-        //}
     }
 }

@@ -5,14 +5,17 @@
     <label>Description</label>
     <input type="text" name="Description" required data-val-required="The Description field is required." />
     <br />
+    @{
+        DateTime minDate = DateTime.Now;
+        DateTime maxDate = DateTime.Now.AddYears(3);
+    }
     <label>Due Date</label>
-    <input class="form-control" type="datetime-local" data-val-required="The Due Date field is required."
-           id="DueDate" name="DueDate" asp-format="{0:yyyy-MM-dd}"  />
+    <input class="form-control" type="datetime" data-val-required="The Due Date field is required." min="@minDate" max="@maxDate" data-val-min="Must be a future date."
+           data-val-max="Must be less than 3 years from today." id="DueDate" name="DueDate" />
     <br />
     <label>Complete:</label><input type="radio" name="Complete" id="Complete" value="true" readonly disabled />
     <label>Incomplete:</label><input type="radio" name="Complete" id="Complete" value="false" checked disabled readonly />
     <br />
-    @Html.HiddenFor(ToDo => ToDo.User)
-
+    @Html.HiddenFor(ToDo => ToDo.UserId)
     <input type="submit" />
 </form>

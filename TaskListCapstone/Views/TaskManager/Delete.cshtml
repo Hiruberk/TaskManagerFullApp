@@ -20,8 +20,8 @@
     {
         <label>Status: Incomplete</label>
     }
-
-
+    @Html.HiddenFor(ToDo => ToDo.User)
+    @Html.HiddenFor(ToDo => ToDo.UserId)
     <br />
     <p>Do you wish to delete this task?</p>
     <input type="submit" value="Yes" />

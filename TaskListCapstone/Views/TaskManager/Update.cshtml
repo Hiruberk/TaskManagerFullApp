@@ -1,6 +1,6 @@
 ﻿@model ToDo
 
-
+<p>Hello, @Model.UserId please edit any fields below.</p><br />
 <form method="post">
     <label>ID: </label>
     <input type="number" name="ToDoId" id="ToDoId" value="@Model.ToDoId" readonly />
@@ -8,10 +8,13 @@
     <label>Description: </label>
     <input type="text" name="Description" value="@Model.Description" />
     <br />
-
+    @{ 
+        DateTime minDate = DateTime.Now;
+        DateTime maxDate = DateTime.Now.AddYears(3);
+    }
     <label>Due Date</label>
-    <input class="form-control" type="datetime-local" data-val-required="The Due Date field is required."
-           id="DueDate" name="DueDate" asp-format="{0:yyyy-MM-dd}"  value="@Model.DueDate" />
+    <input class="form-control" type="datetime" data-val-required="The Due Date field is required." min="@minDate" max="@maxDate" data-val-min="Must be a future date."
+           data-val-max="Must be less than 3 years from today." id="DueDate" name="DueDate" value="@Model.DueDate" />
     <br />
 
     <label>Status</label>
@@ -26,7 +29,7 @@
         <label>Complete:</label><input type="radio" name="Complete" id="Complete" value="true" required />
         <label>Incomplete:</label><input type="radio" name="Complete" id="Complete" value="false" required checked />
     }
-
+    @Html.HiddenFor(ToDo => ToDo.UserId)
     <br />
     <br />
     <input type="submit" value="Save" />
